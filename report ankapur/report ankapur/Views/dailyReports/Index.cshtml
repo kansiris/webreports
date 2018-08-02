@@ -1,0 +1,135 @@
+﻿@model report_ankapur.Models.reports
+
+<link href="~/css/jquery.datetimepicker.min.css" rel="stylesheet" />
+
+<link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+@*<div class="content-wrapper">
+    <div class="container-fluid">*@
+<!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a >  Reports</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a > Daily reports</a>
+        </li>
+    </ol>
+    <div class="d-block">
+        @*@using (Html.BeginForm("downloaddaily", "dailyReports", FormMethod.Post))
+        {*@
+            <div class="row my-2">
+                <div class="pl-3 pr-2 float-left d-flex align-items-center">
+                    <b>Select Date</b>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <input type="text" class="form-control" name="DeliverTime" value="" id="datetimepicker"  placeholder="Date" />
+                </div>
+                <div class="col-xs-12">
+                    <select id ="restcode">
+                        <option value="">select restaurant</option>
+                        <option value="HN">Himayath Nagar</option>
+                        <option value="AN">A.S.Rao Nagar</option>
+                        <option value="KP">Kukatpally</option>
+                    </select>
+                </div>
+                <div class="px-2 float-left">
+                    <button class="btn btn-primary" type="button" id="btnplaceorder" value="placeorder" onclick="saveorder(this.value)">Report </button>
+                </div>
+                @*<button class="btn  btn-primary mr-2" value="download" onclick="downloadvalue(this.value)">Download</button>*@
+                @*<div class="px-2 float-left">
+                    <input type="submit" class="btn btn-primary" id="btnSubmit" value="Download" />
+                </div>*@
+            </div>
+        @*}*@
+    </div>
+
+
+<!-- Example DataTables Card-->
+   
+    
+  
+        <div id="records1">
+            @*@{Html.RenderAction("Dailyreport", "dailyReports");}*@
+        </div>
+    
+
+
+
+   
+<script src="~/vendor/jquery/jquery.min.js"></script>
+@*<script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#records").html());
+            });
+        });
+</script>*@
+<script src="~/js/jquery.datetimepicker.full.js"></script>
+<script type="text/javascript">
+        $('#datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            startDate: new Date(),
+            //   format: 'm/d/Y',
+            //  format: 'd/m/Y',  
+                format: 'Y/m/d',
+            formatDate: 'Y/d/m'
+        });
+
+</script>
+
+<script type="text/javascript">
+
+        function saveorder(clickedvalue) {
+            var deliverytime = new Date();
+            deliverytime.setHours(deliverytime.getHours() + 1);
+            var date = new Date().toDateString() + ' ' + deliverytime.toLocaleTimeString();
+            var dpval = $("#datetimepicker").val();
+            DeliverTime = $("#datetimepicker").val();
+            //var restcode = $(".restcode option:selected").val();
+            var restcode = $("#restcode").val();
+           // alert(restcode);
+            if (restcode === undefined) {
+                alert('Please select restarent area!');
+            }
+            if (dpval == '') {
+                alert('Please select Date');
+                $("#datetimepicker").focus();
+            }
+
+            else {
+                if (clickedvalue == 'placeorder') {
+
+                    $.ajax({
+                  
+                        type: 'POST',
+                        url: '/dailyReports/ajaxcall',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            //alert(data);
+                            var url = '/dailyReports/Dailyreport?DeliverTime=' + DeliverTime + '&restcode=' + restcode;
+                            $('#records1').empty().load(url);
+                           
+                        },
+                        error: function (data) {
+                         
+                            alert("Failed!!!");
+                        }
+                    });
+
+                }
+            }
+        }
+   
+
+</script>
+     
+                }
+                else
+                {
+                    Response.Redirect("/Home/Index");
+                }

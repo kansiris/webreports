@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Monthlytable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a > Dashboard </a>
+        </li>
+        <li class="breadcrumb-item active">
+            <a>  Last 31 Days</a>
+        </li>
+    </ol>
+
+
+    <!-- Example DataTables Card-->
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+
+                <div class="col-xs-6 col-md-1">
+                    @using (Html.BeginForm("previousmonth", "Home", FormMethod.Post))
+                    {      <input type="hidden" value="@ViewBag.selectdate2" name="DeliverTime">
+                        <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                        <input type="submit" class="btn btn-primary"
+                               value="<Previous ">
+                    }
+                </div>
+
+                <div class="text-center d-flex col-xs-12 col-md-8 align-items-center justify-content-center">
+                    <i class="fa fa-table mr-2"></i>  &nbsp;  From: &nbsp; <b> @ViewBag.selectdate</b> &nbsp; - &nbsp;  To: &nbsp;  <b> @ViewBag.selectdate1 </b> &nbsp; 
+                </div>
+                <div class="col-xs-12 text-center">
+                    @using (Html.BeginForm("downloadmonthly", "Home", FormMethod.Post))
+                    {
+                        <input type="hidden" value="@ViewBag.selectdate2" name="DeliverTime">
+                        <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                        <input type="submit" class="btn  btn-primary mr-2" value="Download">
+                        @*<a href="/Home/downloadweekly" class="btn  btn-primary mr-2">Download</a>*@
+                    }
+                </div>
+                <div class="col-xs-6 col-md-1 float-left">
+                    @using (Html.BeginForm("nextmonth", "Home", FormMethod.Post))
+                    {
+                        <input type="hidden" value="@ViewBag.selectdate2" name="DeliverTime">
+                        <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                        <input type="submit" class="btn btn-primary" value="Next >">
+                    }
+                </div>
+
+            </div>
+
+        </div>
+      
+        <div class="card-body">
+            <div class="table-responsive" id="records">
+                @{Html.RenderAction("monthlypview", "Home");}
+            </div>
+        </div>
+    </div>
+    @*</div>
+        </div>*@
+                    <div id="myModal">
+                        <div class="customerDetailsAlert position-fixed">
+                            <div class="content position-absolute p-3">
+                                @{Html.RenderAction("OrderDetails", "Home");}
+                                <i class="fa fa-times position-absolute" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+    <!-- Custom scripts for this page-->
+                                    <script src="~/vendor/jquery/jquery.min.js"></script>
+                                    <script src="~/vendor/datatables/jquery.dataTables.js"></script>
+                                    <script src="~/vendor/datatables/dataTables.bootstrap4.js"></script>
+                                    <script>
+            $(document).ready(function () {
+                var table = $('#dataTable').DataTable();
+
+                $('#dataTable tbody').on('click', 'tr', function () {
+                    var data = table.row(this).data();
+                    var id = data[0];
+                    //  var restcode = '@ViewBag.restcode';
+                    var restcode = '@Request.QueryString["restcode"]';
+                    var url = 'OrderDetails/Home?orderid=' + id + '&restcode=' + restcode;
+                    $('#orderdetails').empty().load(url);
+                   // alert(data[0]);
+                    $('#myModal').show();
+                    $(".customerDetailsAlert").css("display", "block");
+                   // alert(data[0]);
+
+                });
+            });
+                                    </script>
+                                    <script>
+        var customerDetailsAlertClose = $(".customerDetailsAlert > .content > i.fa-times");
+        var Cds = customerDetailsAlertClose;
+        $(Cds).click(function () {
+            var closeAlert = "none";
+            $(this).parents(".customerDetailsAlert").css("display", closeAlert);
+
+        });
+                                    </script>
+
+
+                                    }
+                                    else
+                                    {
+                                        Response.Redirect("/Home/Index");
+                                    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

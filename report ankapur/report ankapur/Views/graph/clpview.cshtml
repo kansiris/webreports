@@ -1,0 +1,41 @@
+﻿<fieldset>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+
+
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dates = '@ViewBag.time';
+             var date1 = dates.split(',');
+            var orders1 = [@ViewBag.orders];
+
+            var data = new google.visualization.DataTable();
+             data.addColumn('string', 'dates');
+            data.addColumn('number', 'orders');
+            for (i = 0; i < date1.length; i++) {
+                data.addRow([date1[i].toString(), orders1[i]]);
+            }
+            var options = {
+                title: 'Ankapurchicken Sales per Date',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: {
+                    title: 'date', titleTextStyle: { color: 'blue' }
+                       }
+            };
+
+            //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+
+          //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div1'));
+           // var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+    <div id="chart_div1"  width="100%" height="700">
+    </div>
+</fieldset>

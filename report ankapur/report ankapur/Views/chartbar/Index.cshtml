@@ -1,0 +1,27 @@
+﻿@model report_ankapur.Models.chartline
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>
+    @ViewBag.Title
+</title>
+
+
+
+<!-- Example Pie Chart Card-->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> Ankapurchicken Sales per Month
+    </div>
+    <div class="card-body">
+        @{Html.RenderAction("cbpview", "chartbar");}
+    </div>
+</div>
+
+
+<!-- Example DataTables Card-->
+@*@{Html.RenderAction("clp2view", "chartsline");}*@
+
+

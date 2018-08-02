@@ -1,0 +1,243 @@
+﻿@{
+    WebGrid grid = new WebGrid(source: Model, canSort: false, rowsPerPage: 100);
+}
+@if (Model != null)
+{
+
+    <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Customer Phone</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Delivery Address</th>
+             
+                </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                   <td>
+                   @*@using (Html.BeginForm("customerpview1", "customer", FormMethod.Post))
+                    {*@  
+                       <input type="hidden" name="phoneno"  value="@item.phoneNo"  id="phoneno">
+                       <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                       <button class="btn btn-primary btnphoneno" type="submit" id="myBtn"  name="@item.phoneNo" onclick="asssignvalue(@item.phoneNo)">@item.phoneNo</button> 
+                   @*}*@
+                   </td>
+                    <td>@item.firstname</td>
+                    <td>@item.lastname</td>
+                    <td>@item.daddress</td>
+                    
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+
+
+
+    @*<div id="main" style="padding:25px; background-color:white;">
+        @grid.GetHtml(
+
+        htmlAttributes: new { id = "gridT1", width = "700px" },
+
+            columns: grid.Columns(
+                    grid.Column("custDetails.phoneNo", "PhoneNo"),
+                    grid.Column("custDetails.firstname", "firstname"),
+                    grid.Column("custDetails.lastname", "lastname"),
+                    grid.Column("custDetails.daddress", "address"),
+                           //   grid.Column(header: "Phone Number", format: (item) => item.Value.custDetails.phoneNo),
+
+        grid.Column(format: (item) =>
+        {
+            WebGrid subGrid = new WebGrid(source: item.orderDetails);
+            return subGrid.GetHtml(
+                htmlAttributes: new { id = "subT1" },
+                columns: subGrid.Columns(
+                        subGrid.Column("OrderId", "OrderId"),
+                        subGrid.Column("OrderDate", "OrderDate"),
+                        subGrid.Column("restcode", "restcode"),
+                        subGrid.Column("OrderType", "OrderType"),
+                        subGrid.Column("orderstatus", "orderstatus"),
+                        subGrid.Column("TotalAmount", "TotalAmount")
+                       )
+                );
+        })
+
+                )
+
+            )
+    </div>*@
+
+
+}
+@*else if (Model == "0")
+{ <p> No Customer match found. </p>}*@
+
+@*@if (ViewBag.orders != null)
+{
+    <script type="text/javascript">
+            //window.onload = function () {
+                alert("@ViewBag.orders");
+            //};
+    </script>
+}*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @*<form>
+            <div class="row orders-history-page">
+
+                <div class="title col-xs-12 col-md-6 col-md-offset-3 padding-left-0 padding-right-0">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>First Name</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.firstname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Phone</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtphone" class="form-control" readonly="readonly" value="@ViewBag.phoneNo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Last Name</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtaltmobile" class="form-control" readonly="readonly" value="@ViewBag.lastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label> Delivery Address</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.daddress">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Modified Date</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.ModifiedDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Land Mark</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.laddress">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Mobile Number</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.mobileno1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Mobile Number2</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.mobileno2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <label>Created Date</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" id="txtfname" class="form-control" readonly="readonly" value="@ViewBag.CreatedDate">
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-sm-offset-5 col-md-offset-5">
+                            <button type="button" id="contactbutton" class="btn btn-default">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>*@
+
+

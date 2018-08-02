@@ -1,0 +1,38 @@
+﻿@model report_ankapur.Models.chartline
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>
+    @ViewBag.Title
+</title>
+
+
+
+    <!-- Example Pie Chart Card-->
+    @*<div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-area-chart"></i> Area Chart Example
+        </div>
+        <div class="card-body">
+            @{Html.RenderAction("clpview", "chartsline");}
+        </div>
+    </div>*@
+
+
+    <div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> Ankapurchicken Sales per Date for last 30  days
+    </div>
+    <div class="card-body">
+        @{Html.RenderAction("clpview", "chartsline");}
+    </div>
+</div>
+
+<!-- Example DataTables Card-->      
+
+
+@*@{Html.RenderAction("clp2view", "chartsline");}*@
+
+   

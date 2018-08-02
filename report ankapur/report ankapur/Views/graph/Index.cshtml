@@ -1,0 +1,100 @@
+﻿@model report_ankapur.Models.chartline
+@{
+    ViewBag.Title = "Graph";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>
+    @ViewBag.Title
+</title>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a >  Dashboard   </a>
+    </li>
+    <li class="breadcrumb-item active">
+        <a>Ankapurchicken Graph</a> Restaurant:<b> &nbsp; @ViewBag.restcode1 &nbsp;</b>
+    </li>
+    <div class="col-xs-12">
+        <select id="restcode" name="restcode">
+            <option value="">select restaurant</option>
+            <option value="AN">A.S.Rao Nagar</option>
+            <option value="HN">Himayath Nagar</option>
+            <option value="KP">Kukatpally</option>
+        </select>
+    </div>
+</ol>
+
+<!-- Example Pie Chart Card-->
+@*<div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-area-chart"></i> Area Chart Example
+        </div>
+        <div class="card-body">
+            @{Html.RenderAction("clpview", "chartsline");}
+        </div>
+    </div>*@
+
+
+    <!-- Area Chart Example-->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> Sales per Date for Last 31  days
+    </div>
+   
+   
+       
+        @{
+            Html.RenderAction("clpview", "graph", new {restcode = @ViewBag.restcode });
+            }
+
+  
+    <div class="card-footer small text-muted"></div>
+</div>
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Example Bar Chart Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-bar-chart"></i> Sales per Month
+            </div>
+
+            @{
+                Html.RenderAction("cbpview", "graph", new { restcode = @ViewBag.restcode });
+            }
+              
+
+
+            
+            <div class="card-footer small text-muted"></div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Example Pie Chart Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-pie-chart"></i> Sales per Type from Last 30 days
+            </div>
+      
+
+            @{
+                Html.RenderAction("chpie2view", "graph", new { restcode = @ViewBag.restcode });
+            }
+               
+      
+            <div class="card-footer small text-muted"></div>
+        </div>
+    </div>
+</div>
+    <!-- Example DataTables Card-->
+    @*@{Html.RenderAction("clp2view", "chartsline");}*@
+<script src="/Scripts/jquery-1.12.4.js"></script>
+
+<script>
+      $("#restcode").change(function () {
+                                var restcode = $('option:selected', $(this)).val();
+                                location.href = "/graph/Index?restcode=" + restcode;
+                            });
+
+</script>

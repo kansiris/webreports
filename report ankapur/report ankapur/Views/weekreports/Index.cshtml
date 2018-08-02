@@ -1,0 +1,145 @@
+﻿@model report_ankapur.Models.reports
+
+<link href="~/css/jquery.datetimepicker.min.css" rel="stylesheet" />
+
+<link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a >  Reports</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a > Week Reports</a>
+        </li>
+    </ol>
+
+
+    <div class="d-block">
+       @*@using (Html.BeginForm("downloadweekly", "weekreports", FormMethod.Post))
+       {*@
+      
+
+            <div class="row my-2">
+                <div class="pl-3 pr-2 float-left d-flex align-items-center">
+                    <b>Select Date</b>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <input type="text" class="form-control" name="DeliverTime" value="" id="datetimepicker" placeholder="Date" />
+                </div>
+                <div class="col-xs-12">
+                    <select id="restcode" name="restcode">
+                        <option value="">select restaurant</option>
+                        <option value="AN">A.S.Rao Nagar</option>
+                        <option value="HN">Himayath Nagar</option>
+                        <option value="KP">Kukatpally</option>
+                    </select>
+                </div>
+                <div class="px-2 float-left">
+                    <button class="btn btn-primary" type="button" id="btnplaceorder" value="placeorder" onclick="saveorder(this.value)">Report </button>
+                </div>
+                @*<button class="btn  btn-primary mr-2" value="download" onclick="downloadvalue(this.value)">Download</button>*@
+                @*<div class="px-2 float-left">
+                    <input type="submit" class="btn btn-primary" id="btnSubmit" value="Download" />
+                </div>*@
+            </div>
+       
+    
+        @*}*@
+        </div>
+<!-- Example DataTables Card-->
+@*<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> Reports
+    </div>
+       <div class="card-body">
+        <div class="table-responsive" id="records">
+            @{Html.RenderAction("weeklyreport", "weekreports");}
+        </div>
+    </div>
+   
+</div>*@
+
+    <div id="records1">
+        @*@{Html.RenderAction("Dailyreport", "dailyReports");}*@
+    </div>
+@*</div>
+    </div>*@
+
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#records").html());
+            });
+        });
+</script>
+<script src="~/js/jquery.datetimepicker.full.js"></script>
+<script type="text/javascript">
+        $('#datetimepicker').datetimepicker({
+            dayOfWeekStart: 1,
+            lang: 'en',
+            startDate: new Date(),
+            //  format: 'm/d/Y',
+            //format: 'd/m/Y',//test
+            format: 'Y/m/d',
+            formatDate: 'Y/d/m'
+        });
+
+</script>
+
+<script type="text/javascript">
+
+        function saveorder(clickedvalue) {
+            var deliverytime = new Date();
+            deliverytime.setHours(deliverytime.getHours() + 1);
+            var date = new Date().toDateString() + ' ' + deliverytime.toLocaleTimeString();
+            var dpval = $("#datetimepicker").val();
+            DeliverTime = $("#datetimepicker").val();
+            var restcode = $("#restcode").val();
+            if (restcode === undefined) {
+                alert('Please select restarent area!');
+            }
+            if (dpval == '') {
+                $("body").overhang({
+                    type: "warn",
+                    message: "Please select the Date.",
+                    duration: 5,
+                    overlay: true
+                });
+                $("#datetimepicker").focus();
+            }
+
+            else {
+                if (clickedvalue == 'placeorder') {
+                    var cartdata = window.localStorage.getItem("finalvalue");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/weekreports/ajaxcall',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                           // alert(data);
+                            var url = '/weekreports/weeklyreport?DeliverTime=' + DeliverTime + '&restcode=' + restcode;
+                            $('#records1').empty().load(url);
+                          
+                        },
+                        error: function (data) {
+                          
+                            alert("Failed!!!");
+                        }
+                    });
+
+                }
+            }
+        }
+
+</script>
+}
+else
+{
+    Response.Redirect("/Home/Index");
+}

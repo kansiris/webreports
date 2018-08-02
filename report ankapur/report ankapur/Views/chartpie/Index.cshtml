@@ -1,0 +1,29 @@
+﻿@model report_ankapur.Models.chartpie
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<title>
+    @ViewBag.Title
+</title>
+
+
+
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-area-chart"></i> Ankapurchicken Sales per Type from last 30 days
+    </div>
+    <div class="card-body">
+@{Html.RenderAction("chpie2view", "chartpie");}
+    </div>
+</div>
+<!-- Example DataTables Card-->
+@*@{Html.RenderAction("weekpview", "Home");}*@
+
+
+
+

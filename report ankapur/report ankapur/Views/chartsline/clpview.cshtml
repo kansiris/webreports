@@ -1,0 +1,243 @@
+﻿<fieldset>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+
+
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dates = '@ViewBag.time';
+             var date1 = dates.split(',');
+            var orders1 = [@ViewBag.orders];
+
+            var data = new google.visualization.DataTable();
+             data.addColumn('string', 'dates');
+            data.addColumn('number', 'orders');
+            for (i = 0; i < date1.length; i++) {
+                data.addRow([date1[i].toString(), orders1[i]]);
+            }
+            var options = {
+                title: 'Ankapurchicken Sales per Date',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: {
+                    title: 'date', titleTextStyle: { color: 'blue' }
+                       }
+            };
+
+            //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+
+          //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+           // var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+    <div id="chart_div" style="width: 900px; height: 500px;">
+    </div>
+</fieldset>
+
+
+
+
+
+
+@*<table style="width:100%">
+    <tr>
+        <th>charts</th>
+
+    </tr>
+    <tr>
+        <td>
+            <fieldset>
+                <legend style="font-family:Arial;color:blue;font-size:large">Ankspur Orders</legend>
+                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+                <script type="text/javascript">
+
+
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dates = '@ViewBag.time';
+             var date1 = dates.split(',');
+            var orders1 = [@ViewBag.orders];
+
+            var data = new google.visualization.DataTable();
+             data.addColumn('string', 'dates');
+            data.addColumn('number', 'orders');
+            for (i = 0; i < date1.length; i++) {
+                data.addRow([date1[i].toString(), orders1[i]]);
+            }
+            var options = {
+                title: 'Ankapur chicken orders',
+                hAxis: {
+                    title: 'date', titleTextStyle: { color: 'blue' }
+                       }
+            };
+
+            //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+
+          //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+           // var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+                </script>
+                <div id="chart_div" style="width: 1100px; height: 700px;">
+                </div>
+            </fieldset>
+
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+
+            <fieldset>
+                @*<legend style="font-family:Arial;color:blue;font-size:large">Ankspur Orders</legend>
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+                <script type="text/javascript">
+
+
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dates = '@ViewBag.ordertype';
+            var date1 = dates.split(',');
+            var orders1 = [@ViewBag.orders1];
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'dates');
+            data.addColumn('number', 'orders');
+            for (i = 0; i < date1.length; i++) {
+                data.addRow([date1[i].toString(), orders1[i]]);
+            }
+            var options = {
+                title: 'Ankapur chicken orders',
+                hAxis: {
+                    title: 'date', titleTextStyle: { color: 'blue' }
+                }
+            };
+
+            //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
+
+            //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            // var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+                </script>
+                <div id="chart_div1" style="width: 300px; height: 500px;">
+                </div>
+                </fieldset>
+</td>
+        <td>
+
+            <fieldset>
+               @* <legend style="font-family:Arial;color:blue;font-size:large">Ankspur Orders</legend>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+                <script type="text/javascript">
+
+
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dates2 = '@ViewBag.time2';
+            var date2 = dates2.split(',');
+            var orders2 = [@ViewBag.orders2];
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'dates2');
+            data.addColumn('number', 'orders2');
+            for (i = 0; i < date2.length; i++) {
+                data.addRow([date2[i].toString(), orders2[i]]);
+            }
+            var options = {
+                title: 'Ankapur chicken orders',
+                hAxis: {
+                    title: 'date', titleTextStyle: { color: 'blue' }
+                }
+            };
+
+            //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+            //var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+            //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            // var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+                </script>
+                <div id="chart_div2" style="width: 300px; height: 500px;">
+                </div>
+            </fieldset>
+
+
+
+
+        </td>
+
+    </tr>
+
+</table>*@
+
+
+
+
+
+
+
+
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+        <script>
+
+                var LineChartData =
+                    {
+                        labels: [@Html.Raw(ViewBag.time)],
+                        datasets: [{
+                            label: 'ProductWise Sales Count',
+                            backgroundColor: "rgba(75,192,192,0.4)",
+                            borderWidth: 2,
+                            data: [@ViewBag.orders]
+                        }]
+                    };
+
+                    window.onload = function () {
+                        var ctx1 = document.getElementById("Linecanvas").getContext("2d");
+                        window.myBar = new Chart(ctx1,
+                            {
+                                type: 'line',
+                                data: LineChartData,
+                                options:
+                                    {
+                                        title:
+                                        {
+                                            display: true,
+                                            text: "ProductWise Sales Count"
+                                        },
+                                        responsive: true,
+                                        maintainAspectRatio: true
+                                    }
+                            });
+                    }
+        </script>
+
+            <div style="text-align: center">
+                <canvas id="Linecanvas"></canvas>
+            </div>*@
+

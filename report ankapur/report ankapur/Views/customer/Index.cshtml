@@ -1,0 +1,193 @@
+﻿@*@model report_ankapur.Models.custorderdetails*@
+@*@model Tuple<report_ankapur.Models.customer, report_ankapur.Models.reports>*@
+@model IEnumerable<report_ankapur.Viewmodel.customerviewmodel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a>   Dashboard    </a>
+    </li>
+    <li class="breadcrumb-item active">
+        <a>Customer Details</a>
+    </li>
+</ol>
+
+
+<div class="d-block">
+    @*@using (Html.BeginForm("downloaddaily", "dailyReports", FormMethod.Post))
+        {*@
+    <div class="row my-2">
+        <div class="pl-3 pr-2 float-left d-flex align-items-center">
+            <b>Enter Name/PhoneNumber</b>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <input type="search" name="search" class="form-control" value="" id="datetimepicker" placeholder="Name/PhoneNumber" pattern="[a-z0-9._]" />
+        </div>
+        <div class="col-xs-12">
+            <select id="restcode" name="restcode">
+                <option value="">Select Restaurant</option>
+                <option value="AN">A.S.Rao Nagar</option>
+                <option value="HN">Himayath Nagar</option>
+                <option value="KP">Kukatpally</option>
+            </select>
+        </div>
+        <div class="px-2 float-left">
+            <button class="btn btn-primary" type="button" id="btnplaceorder" value="placeorder" onclick="saveorder(this.value)"> Search </button>
+        </div>
+        @*<button class="btn  btn-primary mr-2" value="download" onclick="downloadvalue(this.value)">Download</button>*@
+        @*<div class="px-2 float-left">
+                <input type="submit" class="btn btn-primary" id="btnSubmit" value="Download" />
+            </div>*@
+    </div>
+    @*}*@
+</div>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> Customer Details
+    </div>
+    <div class="card-body"><input type="hidden" id="hdnphoneno" />
+        <div class="table-responsive" id="records">
+            @{Html.RenderAction("customerpview", "customer");}
+        </div>
+    </div>
+</div>
+
+
+
+ @*@*The Modal
+
+  
+        @*<h3>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</h3>*@
+        @*@{Html.RenderAction("customerpview1", "customer",new { phoneno = "123456789"});}*@
+        @*<div class="modal-content" id="ordersummary">
+            <span class="close">&times;</span>
+            <p> Total Orders :@ViewBag.orders        Total Amountpaid :@ViewBag.Totalamount</p>
+        </div>
+        @{Html.RenderAction("customerpview1", "customer");}
+   
+
+</div>*@
+<div id="myModal">
+    <div class="customerDetailsAlert position-fixed">
+        <div class="content position-absolute p-3">
+            @{Html.RenderAction("customerpview1", "customer");}
+            <i class="fa fa-times position-absolute" aria-hidden="true"></i>
+        </div>
+    </div>
+    </div>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script type="text/javascript">
+
+        function asssignvalue(val) {
+
+            $('#hdnphoneno').val(val);
+            var restcode = $("#restcode").val();
+            if (restcode === undefined) {
+                alert('Please select restarent area!');
+            }
+            var url = 'customer/customerpview1?phoneno=' + val + '&restcode=' + restcode;
+            $('#ordersummary').empty().load(url);
+            $('#myModal').show();
+            $(".customerDetailsAlert").css("display", "block");
+
+        }
+        // When the user clicks on <span> (x), close the modal
+        // Get the <span> element that closes the modal
+        //var span = document.getElementsByClassName("close")[0];
+        //span.onclick = function () {
+        //    //function close() {
+        //    alert('siri');
+        //    //    $('#myModal').hide();
+        //}
+        //function (close) {
+        //     $(this).parents(".forgot-popup").css("display", "none");
+        // });
+
+
+
+
+        function saveorder(clickedvalue) {
+            var dpval = $("#datetimepicker").val();
+            DeliverTime = $("#datetimepicker").val();
+            var restcode = $("#restcode").val();
+            if (restcode == '') {
+                alert('Select Restaurant');
+            }
+            if (dpval == '') {
+                alert("enter phonenumber or name ");
+                $("#datetimepicker").focus();
+            }
+
+            else {
+                if (clickedvalue == 'placeorder') {
+
+                    $.ajax({
+
+                        type: 'POST',
+                        url: '/customer/ajaxcall',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            //alert(data);
+                            var url = '/customer/customerpview?DeliverTime=' + DeliverTime + '&restcode=' + restcode;
+                            $('#records').empty().load(url);
+
+                        },
+                        error: function (data) {
+
+                            alert("Failed!!!");
+                        }
+                    });
+
+                }
+            }
+        }
+    </script>
+    @*<script>
+            $(function () {
+                $("#dialog").dialog();
+            });
+        </script>*@
+    @*<script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>*@
+    <script>
+        var customerDetailsAlertClose = $(".customerDetailsAlert > .content > i.fa-times");
+        var Cds = customerDetailsAlertClose;
+        $(Cds).click(function () {
+            var closeAlert = "none";
+            $(this).parents(".customerDetailsAlert").css("display", closeAlert);
+        
+        });
+    </script>
+   

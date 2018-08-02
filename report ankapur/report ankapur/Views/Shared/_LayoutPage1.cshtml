@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="~/images/favicon.png">
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <div class="overlay" style="display: block;">
+        <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+            <img src="~/images/Loader.gif" /><br>
+            <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+   
+   
+</body>
+</html>

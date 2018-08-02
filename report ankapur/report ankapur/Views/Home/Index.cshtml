@@ -1,0 +1,102 @@
+﻿@using report_ankapur.Models
+@model report_ankapur.Models.mangement
+@*@model report_ankapur.Models.TblNewCustomer*@
+
+@*@{
+    ViewBag.Title = "Log in";
+}*@
+@{
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>@ViewBag.Title </h2>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>:: Login ::</title>
+    <!-- Bootstrap core CSS-->
+
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
+    <link href="~/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+     <!-- Custom styles for this template-->
+    <link href="~/css/sb-admin.css" rel="stylesheet">
+    <script type="text/javascript">
+    function onBegin() {
+        $("#divLoading").html('<image src="~/images/Loader.gif" alt="Loading, please wait" />');
+    }
+    function onComplete() {
+        $("#divLoading").html("");
+    }
+    </script>
+</head>
+
+<body class="body-bg">
+    <div class="container">
+        
+        <div class="card1 card-login mx-auto mt-5 position-relative">
+            <div class="card1-header position-absolute w-100"><img src="~/images/icon.png" /></div>
+           
+            <div class="card1-body">
+                <div class="text-center" href="#"><b>Ankapur Chicken Web Reports</b>               </div>
+                
+
+@using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone Number</label>
+                        @*<input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">*@
+                        @*@Html.EditorFor(model => model.Mobile1, new { htmlAttributes = new { @class = "form-control", placeholder = "Phonenumber" } })
+                        @Html.ValidationMessageFor(model => model.Mobile1, "", new { @class = "text-danger" })*@
+                        @*@Html.EditorFor(model => model.CustPhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Phonenumber" } })
+                        @Html.ValidationMessageFor(model => model.CustPhoneNumber, "", new { @class = "text-danger" })*@
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" ,placeholder = "Phone Number"} })
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input class="form-control" id="Password" name ="Password" type="password" placeholder="Password">
+                        @*@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Password" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                    </div>
+                   
+                    @*<a class="btn btn-primary btn-block" href="index.html">Login</a>*@
+                    <input type="submit" class="btn btn-primary btn-block" value="Log in"id="btnSubmit" onclick="loader()"  />
+                </form>
+}
+           
+            </div>
+        </div>
+    </div>
+    <div id="divLoading"></div>
+
+    <div id="Rules"></div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+</html>
+
+@*<script type="text/javascript">
+    /* -------------------------------  wait for images to load ------------------------ */
+    function alert() {
+        $('.sp-wrap').smoothproducts();
+        $(".overlay").hide();
+    };
+        </script>*@
+
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

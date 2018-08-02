@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AnkapurModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblNewCustomer">
+          <Key>
+            <PropertyRef Name="CustPhoneNumber" />
+          </Key>
+          <Property Name="CustPhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerFName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CustomerLName" Type="varchar" MaxLength="20" />
+          <Property Name="Billing_Address" Type="nvarchar(max)" />
+          <Property Name="Delivery_Addresss" Type="nvarchar(max)" />
+          <Property Name="Land_Mark" Type="nvarchar" MaxLength="250" />
+          <Property Name="Mobile1" Type="nvarchar" MaxLength="20" />
+          <Property Name="Mobile2" Type="nvarchar" MaxLength="20" />
+          <Property Name="CustomerTypeId" Type="int" />
+          <Property Name="DeliveryLocationLatitude" Type="float" />
+          <Property Name="DeliveryLocationLongitude" Type="float" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="date" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="OTP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="ProfileImage" Type="varchar(max)" />
+          <Property Name="ProfilePic" Type="varchar(max)" />
+        </EntityType>
+        <EntityContainer Name="AnkapurModelStoreContainer">
+          <EntitySet Name="TblNewCustomer" EntityType="Self.TblNewCustomer" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AnkapurModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblNewCustomer">
+          <Key>
+            <PropertyRef Name="CustPhoneNumber" />
+          </Key>
+          <Property Name="CustPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerFName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerLName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Billing_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Delivery_Addresss" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Land_Mark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerTypeId" Type="Int32" />
+          <Property Name="DeliveryLocationLatitude" Type="Double" />
+          <Property Name="DeliveryLocationLongitude" Type="Double" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="0" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OTP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="AnkapurEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblNewCustomers" EntityType="Self.TblNewCustomer" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AnkapurModelStoreContainer" CdmEntityContainer="AnkapurEntities1">
+          <EntitySetMapping Name="TblNewCustomers">
+            <EntityTypeMapping TypeName="AnkapurModel.TblNewCustomer">
+              <MappingFragment StoreEntitySet="TblNewCustomer">
+                <ScalarProperty Name="CustPhoneNumber" ColumnName="CustPhoneNumber" />
+                <ScalarProperty Name="CustomerFName" ColumnName="CustomerFName" />
+                <ScalarProperty Name="CustomerLName" ColumnName="CustomerLName" />
+                <ScalarProperty Name="Billing_Address" ColumnName="Billing_Address" />
+                <ScalarProperty Name="Delivery_Addresss" ColumnName="Delivery_Addresss" />
+                <ScalarProperty Name="Land_Mark" ColumnName="Land_Mark" />
+                <ScalarProperty Name="Mobile1" ColumnName="Mobile1" />
+                <ScalarProperty Name="Mobile2" ColumnName="Mobile2" />
+                <ScalarProperty Name="CustomerTypeId" ColumnName="CustomerTypeId" />
+                <ScalarProperty Name="DeliveryLocationLatitude" ColumnName="DeliveryLocationLatitude" />
+                <ScalarProperty Name="DeliveryLocationLongitude" ColumnName="DeliveryLocationLongitude" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OTP" ColumnName="OTP" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Monthlytable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item active">
+            <a>  Daily </a>
+        </li>
+    </ol>
+
+
+    <!-- Example DataTables Card-->
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+
+                <div class="col-xs-6 col-md-2">
+                    @using (Html.BeginForm("previousdaily", "Home", FormMethod.Post))
+                    {      <input type="hidden" value="@ViewBag.selectdate1" name="DeliverTime">
+                        <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                        <input type="submit" class="btn  btn-primary mr-2" value="< Previous Day">
+                    }
+                </div>
+
+                <div class="d-flex col-xs-12 col-md-7 align-items-center justify-content-center">
+                    <i class="fa fa-table mr-2"></i>  Report  Date : @ViewBag.selectdate
+                </div>
+                <div class="col-xs-12 text-center">
+                    @using (Html.BeginForm("downloaddaily", "dailyReports", FormMethod.Post))
+                    {
+                        <input type="hidden" value="@ViewBag.selectdate1" name="DeliverTime">
+                        <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                        <input type="submit" class="btn  btn-primary mr-2" value="Download">
+                        @*<a href="/Home/downloadweekly" class="btn  btn-primary mr-2">Download</a>*@
+                    }
+                </div>
+                <div class="col-xs-6 col-md-1 float-left">
+                    @using (Html.BeginForm("nextday", "Home", FormMethod.Post))
+                    {
+                        <input type="hidden" value="@ViewBag.selectdate1" name="DeliverTime">
+                        <input type="hidden" value="@ViewBag.restcode" name="restcode">
+                        <input type="submit" class="btn  btn-primary mr-2" value="Next Day >">
+                    }
+                </div>
+
+            </div>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" id="records">
+                <p class="my-2 col-xl-12">
+                    Revenue :&nbsp;<b>Rs.@ViewBag.revenue</b> &nbsp;  Amount Paid : &nbsp;<b>Rs.@ViewBag.Pricesum </b> &nbsp;  Total Orders :&nbsp;<b>@ViewBag.modelCust</b>Restaurant:<b> &nbsp; @ViewBag.restcode1 &nbsp;</b>
+                </p>
+                <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Restaurant Code</th>
+                            @*<th>Totalamount</th>
+                    <th>Orderstatus</th>*@
+                            <th>Customer Phone</th>
+                            @*<th>statusdiscription</th>*@
+                            <th>First name</th>
+                            <th>Last name</th>
+                            @*<th>Billing_Address</th>
+                    <th>Delivery_Addresss</th>
+                    <th>empcode</th>*@
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>Delivery Charges</th>
+                            <th>Cgst Charges</th>
+                            <th>Sgst Charges</th>
+                            <th>Discount</th>
+                            <th>Tip</th>
+                            <th>Amount Paid</th>
+                            <th>Remarks</th>
+                            <th>Order Type</th>
+                            <th>Transaction Id</th>
+                            <th>Transaction Status</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                {
+                            <tr>
+                                <td>@item.OrderId</td>
+                                <td>@item.OrderDate</td>
+                                <td>@item.restcode</td>
+                                <td>@item.customerphone</td>
+                                <td>@item.customerfname</td>
+                                <td>@item.customerlname</td>
+                                @*<td>@item.Totalorder</td>*@
+                                @*<td>@item.Orderstatus</td>*@
+                                <td>@item.Quantity</td>
+                                <td>@item.TotalPrice</td>
+                                <td>@item.Deliverycharges</td>
+                                <td>@item.cgstcharges</td>
+                                <td>@item.sgstcharges</td>
+                                <td>@item.Discount</td>
+                                <td>@item.Tip</td>
+                                <td>@item.amountPaid</td>
+                                <td>@item.Remarks</td>
+                                <td>@item.OrderType</td>
+                                <td>@item.TransactionId</td>
+                                <td>@item.TransactionStatus</td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    @*</div>
+        </div>*@
+
+    <div id="myModal">
+        <div class="customerDetailsAlert position-fixed">
+            <div class="content position-absolute p-3">
+                @{Html.RenderAction("OrderDetails", "Home");}
+                <i class="fa fa-times position-absolute" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <!-- Custom scripts for this page-->
+                    <script src="~/vendor/jquery/jquery.min.js"></script>
+                    <script src="~/vendor/datatables/jquery.dataTables.js"></script>
+                    <script src="~/vendor/datatables/dataTables.bootstrap4.js"></script>
+                    <script>
+            $(document).ready(function () {
+                var table = $('#dataTable').DataTable();
+
+                $('#dataTable tbody').on('click', 'tr', function () {
+                    var data = table.row(this).data();
+                    var id = data[0];
+                    var restcode = data[2];
+                    var url = 'OrderDetails/Home?orderid=' + id + '&restcode=' + restcode;
+                    $('#orderdetails').empty().load(url);
+                   // alert(data[0]);
+                    $('#myModal').show();
+                    $(".customerDetailsAlert").css("display", "block");
+                   // alert(data[0]);
+
+                });
+            });
+                    </script>
+                    <script>
+        var customerDetailsAlertClose = $(".customerDetailsAlert > .content > i.fa-times");
+        var Cds = customerDetailsAlertClose;
+        $(Cds).click(function () {
+            var closeAlert = "none";
+            $(this).parents(".customerDetailsAlert").css("display", closeAlert);
+
+        });
+                    </script>
+                    }
+                    else
+                    {
+                        Response.Redirect("/Home/Index");
+                    }
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

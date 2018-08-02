@@ -1,0 +1,41 @@
+﻿<fieldset>
+    <legend style="font-family:Arial;color:blue;font-size:large">Ankspur Orders</legend>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+
+
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dates = '@ViewBag.ordertype';
+            var date1 = dates.split(',');
+            var orders1 = [@ViewBag.orders];
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'dates');
+            data.addColumn('number', 'orders');
+            for (i = 0; i < date1.length; i++) {
+                data.addRow([date1[i].toString(), orders1[i]]);
+            }
+            var options = {
+                title: 'Ankapur chicken orders',
+                hAxis: {
+                    title: 'date', titleTextStyle: { color: 'blue' }
+                }
+            };
+
+            //Different chart types >> AreaChart , BubbleChart ,LineChart ,ScatterChart
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+
+            //var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+            //var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            // var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+    <div id="chart_div" style="width: 500px; height: 700px;">
+    </div>
+</fieldset>
